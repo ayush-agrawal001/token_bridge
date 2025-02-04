@@ -60,7 +60,7 @@ contract TestContract is Test {
 
     function testPolToEthBridge() public {
         uint256 amount = 100 * 10 ** asq.decimals();
-        wasq.mint(user, 10_000 * 10 ** asq.decimals());
+        wasq.mint(user, 200 * 10 ** asq.decimals());
         asq.mint(address(bridgeEth), amount);
 
         vm.startPrank(user);
