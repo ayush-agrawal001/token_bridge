@@ -9,7 +9,7 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 contract BridgeEth is Ownable{
     address public tokenAddress;
 
-    event Deposit(address indexed depositor, uint amount);
+    event Deposit(address indexed depositor, uint indexed amount);
 
     mapping (address => uint256) public pendingBalance;
 
@@ -23,7 +23,7 @@ contract BridgeEth is Ownable{
         require(_tokenAddress.transferFrom(msg.sender, address(this), _amount));
         emit Deposit(msg.sender, _amount);
     }
-
+    
     function withdraw(IERC20 _tokenAddress, uint256 _amount) public {
         require(address(_tokenAddress) == tokenAddress);
         require(pendingBalance[msg.sender] >= _amount);

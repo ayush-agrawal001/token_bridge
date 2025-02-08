@@ -1,6 +1,4 @@
-"use client"
 
-import { useState } from "react"
 import { useSwap } from "./hooks/useSwap"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,7 +9,7 @@ import Navbar from "./components/navBar"
 import GlitchText from "./components/GlitchText"
 import { Toaster } from "./components/ui/toaster"
 import { AllowUsdt } from "./components/AllowAsq"
-import { useAccount } from "wagmi"
+import { useEffect } from "react"
 
 const currencies = ["ASQ", "WASQ"]
 
@@ -28,7 +26,11 @@ export default function RetroSwap() {
     handleSwapCurrencies,
   } = useSwap()
 
-  const {isConnected} = useAccount();
+  useEffect(() => {
+    if (fromCurrency === "ASQ" && toCurrency === "ASQ") {
+      setToCurrency("WASQ");
+    }
+  },[fromCurrency, toCurrency])
 
   return (
     <div className="min-h-screen bg-black text-neon-blue relative overflow-hidden">
@@ -94,14 +96,16 @@ export default function RetroSwap() {
                 />
               </div>
             </div>
-            <AllowUsdt isConnected={isConnected}/>
+            <AllowUsdt fromCurrency={fromCurrency} toCurrency={toCurrency} fromAmount={parseFloat(fromAmount)} toAmount={parseFloat(toAmount)}/>
             <GlitchText className="text-center text-sm text-neon-orange font-pixel">
               Enter amount and click "Swap"
             </GlitchText>
           </div>
         </div>
       </div>
-      <Toaster></Toaster>
+      <div className="dark">
+        <Toaster></Toaster>
+      </div>
     </div>
   )
 }

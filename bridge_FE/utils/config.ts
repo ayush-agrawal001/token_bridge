@@ -1,12 +1,13 @@
 import { http, createConfig, injected } from "wagmi"
-import { mainnet, sepolia } from "wagmi/chains"
+import { polygonAmoy, sepolia } from "wagmi/chains"
 
 const wagmiConfig = createConfig({
     connectors : [injected()],
-    chains : [mainnet, sepolia],
+    chains : [sepolia, polygonAmoy],
     transports : { 
-        [mainnet.id] : http(),
-        [sepolia.id] : http()
+        // [mainnet.id] : http(),
+        [polygonAmoy.id] : http(String(process.env.VITE_POLYGON_RPC_URL)),
+        [sepolia.id] : http(String(process.env.VITE_SEPOLIA_RPC_URL)),
     }
 }) 
 

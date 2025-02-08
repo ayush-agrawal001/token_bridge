@@ -18,7 +18,7 @@ contract BridgePol is Ownable {
         tokenAddress = _tokenAddress;
     }
 
-    function burn(IWASQ _tokenAddress,uint256 _amount) public {
+    function burn(IWASQ _tokenAddress , uint256 _amount) public {
         require(address(_tokenAddress) == tokenAddress, "Wrong token Address");
         require(_tokenAddress.allowance(msg.sender, address(this)) == _amount, "No allowance found to burn token");
         _tokenAddress.transferFrom(msg.sender, address(this), _amount);
